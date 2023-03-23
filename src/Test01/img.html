@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>图片浏览</title>
+  <script src="vue.js"></script>
+  <style>
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #image {
+      max-width: 80vw;
+      max-height: 80vh;
+    }
+    button {
+      margin: 0 20px;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div id="container">
+    <button @click="prev">&lt;</button>
+    <img id="image" :src="images[currentIndex]" @click="next">
+    <button @click="next">&gt;</button>
+  </div>
+  <div id="controls">
+    <button @click="prev">上一张</button>
+    <button @click="next">下一张</button>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      images: [
+        'image1.jpg',
+        'image2.jpg',
+        'image3.jpg',
+        'image4.jpg'
+      ],
+      currentIndex: 0
+    },
+    methods: {
+      prev: function() {
+        this.currentIndex = (this.currentIndex + this.images.length - 1) % this.images.length;
+      },
+      next: function() {
+        this.currentIndex = (this.currentIndex + 1) % this.images.length;
+      }
+    }
+  })
+</script>
+</body>
+</html>

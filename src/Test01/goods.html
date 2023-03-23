@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简单购物车</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app" align = "center">
+    <h1>简单购物车</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>商品名称</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>金额</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item, index) in goods">
+            <td>
+                <input type="text" v-model="item.name">
+            </td>
+            <td>
+                <input type="number" v-model="item.price" min="0.01" step="0.01" @input="calculateTotalPrice(index)">
+            </td>
+            <td>
+                <input type="number" v-model="item.quantity" min="1" @input="calculateTotalPrice(index)">
+            </td>
+            <td>{{ item.totalPrice.toFixed(1) }}</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3">合计金额：</td>
+            <td>{{ totalAmount.toFixed(1) }}</td>
+        </tr>
+        </tfoot>
+    </table>
+    <button @click="addNewGoods">新增商品</button>
+    <button @click="removeLastGoods">删除最后一个商品</button>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            goods: [
+                {name: '商品1', price: 10.5, quantity: 1, totalPrice: 0},
+                {name: '商品2', price: 8.2, quantity: 1, totalPrice: 0},
+                {name: '商品3', price: 12.3, quantity: 1, totalPrice: 0},
+            ]
+        },
+        computed: {
+            totalAmount: function() {
+                var sum = 0;
+                for(var i=0; i<this.goods.length; i++) {
+                    sum += this.goods[i].totalPrice;
+                }
+                return sum;
+            }
+        },
+        methods: {
+            calculateTotalPrice: function(index) {
+                this.goods[index].totalPrice = this.goods[index].price * this.goods[index].quantity;
+            },
+            addNewGoods: function() {
+                this.goods.push({name: '新商品', price: 0, quantity: 1, totalPrice: 0});
+            },
+            removeLastGoods: function() {
+                if(this.goods.length > 0) {
+                    this.goods.pop();
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

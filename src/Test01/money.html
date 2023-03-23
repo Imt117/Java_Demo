@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>汇率换算</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <label>请输入金额：</label>
+    <input type="number" v-model="amount" @input="updateForeignCurrency"/>
+    <br><br>
+    <label>请选择币种：</label>
+    <select v-model="currency" @change="updateForeignCurrency">
+        <option value="CNY">人民币</option>
+        <option value="USD">美元</option>
+    </select>
+    <br><br>
+    <label>换算后的金额：</label>
+    <span>{{ foreignCurrency }}</span>
+    <br><br>
+    <label>汇率：</label>
+    <input type="number" v-model="exchangeRate" @input="updateForeignCurrency"/>
+    <button @click="toggleExchangeRate">{{ exchangeRateButtonText }}</button>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            amount: '',
+            currency: 'CNY',
+            exchangeRate: 0.15,
+            foreignCurrency: '',
+            exchangeRateButtonText: '调整汇率（CNY/USD）'
+        },
+        watch: {
+            // 监听amount和currency属性的变化
+            amount: function(val) {
+                this.updateForeignCurrency();
+            },
+            currency: function(val) {
+                this.updateForeignCurrency();
+            },
+            exchangeRate: function(val) {
+                this.updateForeignCurrency();
+            }
+        },
+        methods: {
+            // 更新外币金额
+            updateForeignCurrency: function() {
+                var rate = this.currency === 'CNY' ? this.exchangeRate : 1 / this.exchangeRate;
+                this.foreignCurrency = (this.amount * rate).toFixed(2);
+            },
+            // 切换汇率（人民币/美元或美元/人民币）
+            toggleExchangeRate: function() {
+                this.exchangeRate = 1 / this.exchangeRate;
+                this.currency = this.currency === 'CNY' ? 'USD' : 'CNY';
+                this.exchangeRateButtonText = '调整汇率（' + (this.currency === 'CNY' ? 'CNY/USD' : 'USD/CNY') + '）';
+            }
+        }
+    });
+</script>
+</body>
+</html>
