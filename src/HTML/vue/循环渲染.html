@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环渲染中数组排序反转</title>
+    <style>
+      .title{
+        color: red;
+      }
+    </style>
+</head>
+<script src="vue.js">
+
+</script>
+<body>
+    <div id="app">
+      <table border="1">
+        <tr>
+          <td>电影名称</td>
+          <td>电影票房(单位:亿)</td>
+        </tr>
+        <tr v-for="(items,index) in movies">
+          <td>{{items.name}}</td>
+          <td>{{items.pf}}</td>
+        </tr>
+      </table>
+      <input type="button" value="按票房进行排序" @click="sortMovie">
+      <input type="button" value="反转" @click="reverseMovie">
+    </div>
+<script>
+  new Vue({
+    el :'#app',
+    data :{
+      movies :[
+        {name:'红海行动',pf:30},
+        {name:'西虹市首富',pf:80},
+        {name:'狙击手',pf:60},
+      ]
+    },
+    methods:{
+      sortMovie:function(){
+        this.movies.sort(function(a,b){
+          var x=a.pf;
+          var y=b.pf;
+          return (x>y) ? -1 : 1;
+        })
+      },
+      reverseMovie:function(){
+        this.movies.reverse();
+      }
+    }
+  })
+</script>
+</body>
+</html>

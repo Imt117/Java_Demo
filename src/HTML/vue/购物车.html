@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>购物车</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            width: 50%;
+            margin: 20px auto;
+        }
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+
+        td button {
+            margin: 0 5px;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <table>
+        <tr>
+            <th>名称</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>总价</th>
+        </tr>
+        <tr>
+            <td>小米手机</td>
+            <td>{{ product1Price }}</td>
+            <td>
+                <button @click="decrementProduct1Quantity">-</button>
+                {{ product1Quantity }}
+                <button @click="incrementProduct1Quantity">+</button>
+            </td>
+            <td>{{ product1TotalPrice }}</td>
+        </tr>
+        <tr>
+            <td>小米手腕</td>
+            <td>{{ product2Price }}</td>
+            <td>
+                <button @click="decrementProduct2Quantity">-</button>
+                {{ product2Quantity }}
+                <button @click="incrementProduct2Quantity">+</button>
+            </td>
+            <td>{{ product2TotalPrice }}</td>
+        </tr>
+        <tr class="total">
+            <td colspan="3">总计</td>
+            <td>{{ totalPrice }}</td>
+        </tr>
+    </table>
+</div>
+
+<script src="vue.js"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            product1Price: 1235,
+            product1Quantity: 4,
+            product2Price: 500,
+            product2Quantity: 2,
+        },
+        computed: {
+            product1TotalPrice: function () {
+                return this.product1Price * this.product1Quantity;
+            },
+            product2TotalPrice: function () {
+                return this.product2Price * this.product2Quantity;
+            },
+            totalPrice: function () {
+                return this.product1TotalPrice + this.product2TotalPrice;
+            },
+        },
+        methods: {
+            incrementProduct1Quantity: function () {
+                this.product1Quantity++;
+            },
+            decrementProduct1Quantity: function () {
+                if (this.product1Quantity > 1) {
+                    this.product1Quantity--;
+                }
+            },
+            incrementProduct2Quantity: function () {
+                this.product2Quantity++;
+            },
+            decrementProduct2Quantity: function () {
+                if (this.product2Quantity > 1) {
+                    this.product2Quantity--;
+                }
+            },
+        },
+    });
+</script>
+</body>
+</html>

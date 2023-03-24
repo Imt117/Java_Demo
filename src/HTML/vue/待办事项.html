@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>待办事项</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <h1>最近需要完成的计划</h1>
+  <div>
+    <label for="new-todo">添加计划:</label>
+    <input type="text" id="new-todo" v-model="newTodo" @keyup.enter="addTodo">
+    <button v-on:click="addTodo">添加</button>
+  </div>
+  <br>
+  <div>
+    <h2>未完成:</h2>
+    <ul>
+      <li v-for="(todo, index) in unfinishedTodos" :key="index">
+        {{ todo }}
+        <button v-on:click="completeItem(index)">删除</button>
+      </li>
+    </ul>
+    <p>未完成的计划数量: {{ unfinishedTodos.length }}</p>
+  </div>
+  <div>
+    <h2>完成的:</h2>
+    <ul>
+      <li v-for="(todo, index) in finishedTodos" :key="index">
+        {{ todo }}
+      </li>
+    </ul>
+    <p>完成的计划数量: {{ finishedTodos.length }}</p>
+  </div>
+</div>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      newTodo: '',
+      unfinishedTodos: [],
+      finishedTodos: []
+    },
+    methods: {
+      addTodo: function () {
+        if (this.newTodo.trim() !== '') {
+          this.unfinishedTodos.push(this.newTodo);
+          this.newTodo = '';
+        }
+      },
+      completeItem: function (index) {
+        const item = this.unfinishedTodos.splice(index, 1)[0];
+        this.finishedTodos.push(item);
+      }
+    }
+  })
+</script>
+</body>
+</html>
