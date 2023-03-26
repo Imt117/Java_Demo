@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>HTML表格thead,tbody,tfoot在table中不是必须的，只是方便后期JS代码的编写</title>
+
+</head>
+
+<body>
+<!--注意事项:
+    1.row合并(行合并)的时候，删除下面的单元格
+    2.col合并(colum列合并)的时候，
+    3.th标签会自动居中且加粗
+    -->
+<table  border="1px" width="50%" >
+  <!--头-->
+<thead>
+
+<tr>
+
+  <th>员工编号</th>
+  <th>员工薪资</th>
+  <th>部门名称</th>
+
+
+</tr>
+</thead>
+  <!--体-->
+  <tbody>
+
+  <tr>
+
+    <td>d</td>
+
+    <td>e</td>
+
+    <td rowspan="2">f</td>
+
+  </tr>
+  <tr>
+
+    <td colspan="2">x</td>
+
+    <!--  <td>y</td>
+
+      <td >z</td>  -->
+
+
+  </tr>
+</tbody>
+  <!--脚-->
+  <tfoot>
+  <tr>
+
+    <td>x</td>
+
+    <td>y</td>
+
+    <td>z</td>
+
+  </tr>
+  </tfoot>
+</table>
+
+</body>
+
+</html>

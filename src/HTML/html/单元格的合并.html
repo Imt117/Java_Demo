@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>表格的单元格合并以及th标签</title>
+
+</head>
+
+<body>
+<!--注意事项:
+    1.row合并(行合并)的时候，删除下面的单元格
+    2.col合并(colum列合并)的时候，
+    3.th标签会自动居中且加粗
+    -->
+<table  border="1px" width="50%" >
+
+
+  <tr>
+
+    <th>a</th>
+    <th>b</th>
+    <th>c</th>
+
+
+  </tr>
+
+  <tr>
+
+    <td>d</td>
+
+    <td>e</td>
+
+    <td rowspan="2">f</td>
+
+  </tr>
+
+  <tr>
+
+    <td colspan="2">x</td>
+
+    <!--  <td>y</td>
+
+      <td >z</td>  -->
+
+
+  </tr>
+
+</table>
+
+</body>
+
+</html>
