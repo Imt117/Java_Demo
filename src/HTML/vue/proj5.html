@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电影排行</title>
+    <script src="vue.js"></script>
+    <style>
+        .tab-btn {
+            background-color: #f5f5f5;
+            border: none;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .tab-btn.active {
+            background-color: #c3ddf2;
+        }
+
+        .tab-btn:hover {
+            background-color: #e6e6e6;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="box">
+        <ul class="movieMenu" :class="current">
+            <span style="font-size: 25px;">电影排行</span>
+            <button :class="{'tab-btn': true, 'active': current==='hot'}" @click="current='hot'">热播</button>
+            <button :class="{'tab-btn': true, 'active': current==='classic'}" @click="current='classic'">经典</button>
+
+            <component :is="current" :hotlist="hotMovies" :classiclist="classicMovies"></component>
+        </ul>
+    </div>
+</div>
+    <script>
+
+        new Vue({
+            el:"#app",
+
+            data:{
+                current:'hot',
+                hotMovies: [
+                    { name: '终结者5', starring: '阿诺德．施瓦辛格' },
+                    { name: '飓风营救', starring: '连姆．尼森' },
+                    { name: '我是传奇', starring: '威尔．史密斯' }
+                ],
+                classicMovies: [
+                    { name: '机械师2：复活', starring: '杰森．斯坦森' },
+                    { name: '变形金刚', starring: '希亚．拉博夫' },
+                    { name: '暮光之城', starring: '克里斯汀．斯图尔特' }
+                ]
+            },
+            //注册局部组件
+            components:{
+                hot:
+                {
+                    props:['hotlist'],
+                    template:
+                     `<div>
+                        <table>
+                            <tr>
+                                <th>电影排行</th>
+                                <th>电影名称</th>
+                                <th>主演</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr v-for="(movie,index) in hotlist ">
+                                <td>{{index+1}}</td>
+                                <td>{{movie.name}}</td>
+                                <td>{{ movie.starring }}</td>
+                                <td><input type="button" @click="deleteHot(index)" value="删除"></td>
+                            </tr>
+                        </table>
+                    </div>`,
+                    methods:{
+                        deleteHot:function(index){
+                    this.hotlist.splice(index,1);
+                    }
+
+                },
+                },
+                classic:{
+                    props:['classiclist'],
+                    template:
+                     `<div>
+                        <table>
+                            <tr>
+                                <th>电影排行</th>
+                                <th>电影名称</th>
+                                <th>主演</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr v-for="(movie ,index ) in classiclist">
+                                <td>{{index+1}}</td>
+                                <td>{{movie.name}}</td>
+                                <td>{{ movie.starring }}</td>
+                                <td><button @click="deleteClassic(index)">删除</button>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>`,
+                    methods:{
+                        deleteClassic:function(index){
+                    this.classiclist.splice(index,1);
+                    }
+                }
+            },
+        }
+
+        })
+
+    </script>
+</body>
+</html>

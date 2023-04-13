@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <form>
+        <table>
+            <tr>
+                <td>用户名:</td>
+                <td><input type="text" v-model="username" placeholder="请输入用户名"></td>
+            </tr>
+            <tr>
+                <td>个人简介:</td>
+                <td><textarea v-model="profile" placeholder="请输入个人简介"></textarea></td>
+            </tr>
+            <tr>
+                <td>性别:</td>
+                <td>
+                    <input type="radio" id="male" value="男" v-model="sex">
+                    <label for="male">男</label>
+                    <input type="radio" id="female" value="女" v-model="sex">
+                    <label for="female">女</label>
+                </td>
+            </tr>
+            <tr>
+                <td>爱好：</td>
+                <td>
+                    <div v-for="hobby in hobbyArray">
+                        <input type="checkbox" :id="hobby" :value="hobby" v-model="hobbies">
+                        <label :for="hobby">{{ hobby }}</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>爱好：</td>
+                <td>
+                    <label v-for="(item, index) in hobbyArray" :key="index">
+                        <input type="checkbox" :value="item" v-model="hobbies">{{item}}
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="全选" @click="selectAllHobbies">
+                    <input type="button" value="全不选" @click="cancelAllHobbies">
+                    <input type="button" value="反选" @click="reverseHobbies">
+                </td>
+            </tr>
+            <tr>
+                <td>所在地：</td>
+                <td>
+                    <select v-model="location">
+                        <option value="">请选择</option>
+                        <option value="太原">太原</option>
+                        <option value="北京">北京</option>
+                        <option value="上海">上海</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>你擅长的技术：</td>
+                <td>
+                    <select multiple v-model="skills">
+                        <option value="">请选择</option>
+                        <option value="Java">Java</option>
+                        <option value="前端Vue">前端Vue</option>
+                        <option value="PHP">PHP</option>
+                    </select>
+                </td>
+            </tr>
+        <tr>
+            <td>感兴趣的职位：</td>
+            <td>
+                <table>
+                    <tr>
+                        <td>可选职位</td>
+                        <td></td>
+                        <td>已选职位</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select multiple="multiple" size="5" v-model="job">
+                                <option v-for="jobltem in joblist" :value="jobltem">{{jobltem}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="button" value=">>" @click="moveJob('add')"><br>
+                            <input type="button" value="<<" @click="moveJob('remove')">
+                        </td>
+                        <td>
+                            <select multiple="multiple" size="5" v-model="myjob">
+                                <option v-for="myjobitem in myjoblist" :value="myjobitem">{{myjobitem}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="提交" @click.prevent="display">
+                <input type="reset" value="重置">
+            </td>
+        </tr>
+        </table>
+    </form>
+</div>
+        <script>
+            let vm = new Vue({
+                el: '#app',
+                data: {
+                    hobbyArray: ['编程', '词读', '运动', '音乐', '游戏'],
+                    username: '',
+                    profile: '',
+                    sex: '',
+                    hobbies: [],
+                    location: '',
+                    skills: [],
+                    position: [],
+                    joblist: ['Java工程师', '前端工程师', '数据分析师', '全栈工程师', '系统架构师'], // 所有职位列表
+                    myjoblist: [], // 已选职位列表
+                    job: '', // 可选职位列表中选中的选项
+                    myjob: '', // 已选职位列表中选中的选项
+                },
+                methods: {
+                    display: function() {
+                        alert(JSON.stringify(this.$data));
+                    },
+                },
+                watch: {
+                    job: function(val) {
+                        if (val != '') {
+                            this.joblist.splice(this.joblist.indexOf(val), 1);
+                            this.myjoblist.push(val);
+                        }
+                    },
+                    myjob: function(val) {
+                        if (val != '') {
+                            this.myjoblist.splice(this.myjoblist.indexOf(val), 1);
+                            this.joblist.push(val);
+                        }
+                    },
+                },
+            });
+        </script>
+</body>
+</html>
