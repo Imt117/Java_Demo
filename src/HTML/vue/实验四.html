@@ -39,7 +39,7 @@
                 <td>爱好：</td>
                 <td>
                     <label v-for="(item, index) in hobbyArray" :key="index">
-                        <input type="checkbox" :value="item" v-model="hobbies">{{item}}
+                        <input type="checkbox" value="item" v-model="hobbies">{{item}}
                     </label>
                 </td>
             </tr>
@@ -88,7 +88,7 @@
                         <tr>
                             <td>
                                 <select multiple="multiple" size="5" v-model="job">
-                                    <option v-for="jobltem in joblist" :value="jobltem">{{jobltem}}</option>
+                                    <option v-for="jobltem in joblist" value="jobltem">{{jobltem}}</option>
                                 </select>
                             </td>
                             <td>
