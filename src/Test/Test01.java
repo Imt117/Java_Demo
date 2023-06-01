@@ -1,10 +1,12 @@
-package chapter16;
+package Test;
 
 import java.util.Random;
 import java.util.Scanner;
 
+/*猜拳
 
-public class Caiquan {
+ */
+public class Test01 {
     public static void main(String[] args) {
 
         Random r = new Random();
